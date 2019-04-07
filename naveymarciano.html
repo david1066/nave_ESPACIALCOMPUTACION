@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+	<title>INICIO CON JSTHREE</title>
+</head>
+<body background="imagenes/galaxia.jpg">
+ 
+<div id="escenario">
+</div>
+		<script src="js/jquery.js"></script> 
+		<script src="js/Three.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script type="text/javascript"> 
+			$(function(){
+             var scene;
+             var cube;
+             var camera;
+			var renderer;
+			var cylinder;
+			var sphere;
+		    var sphere1 ;
+		    var sphere2;
+		    var sphere3;
+		    var sphere4;
+		    var sphere5;
+		    var sphere6;
+		    var sphere7;
+		    var sphere8;
+            var anillo;
+            var control;
+           var paraizquierda;
+           var paraderecha;
+           var anilloexterno;
+           var singleGeometry;
+           var cabeza;
+           var ojo;
+           var ojo2;
+           var cuerpo;
+           var puntapies;
+           var puntapies2;
+             init();
+
+             function init(){
+			 renderer = new THREE.WebGLRenderer({alpha:true});
+              
+			 renderer.setSize( window.innerWidth, window.innerHeight );
+			 $("#escenario").append(renderer.domElement); 
+			 scene = new THREE.Scene();
+			 crearCamara();
+			 crearCilindro();
+			 crearesfera();
+			 crearesferaspequeñas();
+			 crearanillo();
+			 crearpies();
+			 crearanilloexterno();
+			marciano();
+			 render();
+
+             }
+             
+			   function marciano(){
+			   	  	var geometryesfera = new THREE.SphereGeometry( 1.5, 32, 32 );
+                var materialesfera = new THREE.MeshBasicMaterial( {color: 0x00ff00 } );
+
+                cabeza= new THREE.Mesh( geometryesfera, materialesfera );
+                scene.add(cabeza);
+                cabeza.position.y=6;
+                  	var geometryojos = new THREE.SphereGeometry( 0.3, 32, 32 );
+                var materialojos = new THREE.MeshBasicMaterial( {color: 0x000000 } );
+               ojo= new THREE.Mesh( geometryojos, materialojos );
+               ojo2= new THREE.Mesh(geometryojos, materialojos);
+             scene.add(ojo);
+           
+             ojo.position.y=6;
+             ojo.position.x=-1;
+                ojo.position.z=1.2;
+                scene.add(ojo2);
+                   ojo2.position.y=6;
+             ojo2.position.x=1;
+                ojo2.position.z=1.2;
+
+                var geometrycilindro = new THREE.CylinderGeometry( 0, 3, 2, 200,200, false);
+              
+                var materialcilindro = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+                cuerpo = new THREE.Mesh( geometrycilindro, materialcilindro );
+                scene.add(cuerpo);
+               cuerpo.position.y=3.8;
+			   }
+
+			
+                  function crearCilindro(){
+               //creando una geometria
+				
+				var geometrycilindro = new THREE.CylinderGeometry( 7, 0, 5, 200,200, false);
+              
+                var materialcilindro = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+                 cylinder = new THREE.Mesh( geometrycilindro, materialcilindro );
+                scene.add(cylinder);
+               cylinder.position.y=1;
+
+              }
+                     function crearpies(){
+               //creando una geometria
+				
+				var geometrycilindro = new THREE.CylinderGeometry( 0, 0.2, 5, 200,200, false);
+              
+                var materialcilindro = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
+
+                 pataizquierda = new THREE.Mesh( geometrycilindro, materialcilindro );
+                 pataderecha = new THREE.Mesh( geometrycilindro, materialcilindro );
+                scene.add( pataizquierda);
+                scene.add(pataderecha)
+               pataizquierda.position.y=0;
+                pataizquierda.position.x=-4;
+                pataizquierda.position.z=3;
+               pataizquierda.rotation.z=-10;
+                   pataizquierda.rotation.x=-1;
+            
+                pataderecha.position.y=0;
+                pataderecha.position.x=4;
+                  pataderecha.position.z=3;
+               pataderecha.rotation.z=10;
+                 pataderecha.rotation.x=-1;
+                       	var geometry = new THREE.SphereGeometry( 0.3, 32, 32 );
+                var material = new THREE.MeshBasicMaterial( {color: 0xff0000 } );
+                 
+               puntapies= new THREE.Mesh( geometry, material);
+               puntapies2= new THREE.Mesh(geometry, material);
+             scene.add(puntapies);
+             puntapies.position.y=-1.2;
+              puntapies.position.z=4.8;
+                   puntapies.position.x=-5.3;
+             scene.add(puntapies2);
+             puntapies2.position.y=-1.2;
+              puntapies2.position.z=4.8;
+                   puntapies2.position.x=5.3;
+
+              }
+              function crearesfera(){
+               	var geometryesfera = new THREE.SphereGeometry( 4, 32, 32 );
+                var materialesfera = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity:0.8, transparent:true } );
+
+                sphere = new THREE.Mesh( geometryesfera, materialesfera );
+                scene.add(sphere);
+                sphere.position.y=4;
+              }
+              function merge(){
+              	singleGeometry = new THREE.Geometry();
+              	var Mesh1 = new THREE.Mesh(sphere1);
+              	var Mesh2 = new THREE.Mesh(sphere2);
+              	var Mesh3 = new THREE.Mesh(sphere3);
+                var Mesh4 = new THREE.Mesh(sphere4);
+                var Mesh5 = new THREE.Mesh(sphere5);
+                var Mesh6 = new THREE.Mesh(sphere6);
+                var Mesh7 = new THREE.Mesh(sphere7);
+                var Mesh8 = new THREE.Mesh(sphere8);
+                Mesh1.updateMatrix();
+                    singleGeometry.merge(Mesh1.geometry, Mesh1.matrix);
+                Mesh2.updateMatrix();
+                singleGeometry.merge(Mesh2.geometry, Mesh2.matrix);
+                Mesh3.updateMatrix();
+                singleGeometry.merge(Mesh3.geometry, Mesh3.matrix);
+                Mesh4.updateMatrix();
+                singleGeometry.merge(Mesh4.geometry, Mesh4.matrix);
+                Mesh5.updateMatrix();
+                  singleGeometry.merge(Mesh5.geometry, Mesh5.matrix);
+                Mesh6.updateMatrix();
+                 singleGeometry.merge(Mesh6.geometry, Mesh6.matrix);
+                Mesh7.updateMatrix();
+                singleGeometry.merge(Mesh7.geometry, Mesh7.matrix);
+                Mesh8.updateMatrix();
+                singleGeometry.merge(Mesh8.geometry, Mesh8.matrix);
+              
+                 
+                  var material = new THREE.MeshPhongMaterial({color: 0xFF0000});
+                 var messh = new THREE.Mesh(singleGeometry, material);
+                 scene.add(mesh);
+              }
+
+              
+                 function crearesferaspequeñas(){
+               	var geometryesferap = new THREE.SphereGeometry( 0.3, 32, 32 );
+                var materialesferap = new THREE.MeshBasicMaterial( {color: 0x0000ff } );
+                	
+                sphere1 = new THREE.Mesh( geometryesferap, materialesferap );
+                sphere2 = new THREE.Mesh( geometryesferap, materialesferap );
+                sphere3 = new THREE.Mesh( geometryesferap, materialesferap );
+                sphere4 = new THREE.Mesh( geometryesferap, materialesferap );
+                sphere5 = new THREE.Mesh( geometryesferap, materialesferap );
+                 sphere6 = new THREE.Mesh( geometryesferap, materialesferap );
+                  sphere7 = new THREE.Mesh( geometryesferap, materialesferap );
+              
+                sphere  = new THREE.Mesh( geometryesferap, materialesferap );
+                scene.add(sphere);
+
+                  sphere.position.y=3.6;
+                sphere.position.x=5;
+                sphere.position.z=4;
+                scene.add(sphere1);
+
+                   sphere1.position.y=3.5;
+                sphere1.position.x=3;
+                sphere1.position.z=5.5;
+                scene.add(sphere2);
+
+                 sphere2.position.y=3.5;
+                sphere2.position.x=1;
+                sphere2.position.z=6.2;
+                 scene.add(sphere3);
+
+                sphere3.position.y=3.5;
+                sphere3.position.x=-1;
+                sphere3.position.z=6.2;
+
+                  scene.add(sphere4);
+                
+                sphere4.position.y=3.5;
+                sphere4.position.x=-3;
+                sphere4.position.z=5.5;
+                   scene.add(sphere5);
+
+                sphere5.position.y=3.5;
+                sphere5.position.x=-5;
+                sphere5.position.z=4;
+
+                scene.add(sphere6);
+
+                 sphere6.position.y=3.5;
+                 sphere6.position.x=-6;
+                   sphere6.position.z=1;
+
+                scene.add(sphere7);
+                  sphere7.position.y=3.5;
+                 sphere7.position.x=6;
+                   sphere7.position.z=1;
+             
+              
+              }
+              function crearanillo(){
+               anillo= new THREE.TorusGeometry( 3.5, 0, 100, 100 );
+                var material = new THREE.MeshBasicMaterial( { color: 0xffffff, opacity: 10} );
+                var torus = new THREE.Mesh( anillo, material );
+                scene.add(torus);
+                torus.position.y=3.5;
+                torus.position.z=0;
+                torus.rotation.x=Math.PI*0.5;
+              }
+              function crearanilloexterno(){
+              	  anilloexterno= new THREE.TorusGeometry( 4, 0, 100, 100 );
+                var material = new THREE.MeshBasicMaterial( { color: 0xffff00} );
+                var torus = new THREE.Mesh( anilloexterno, material );
+                scene.add(torus);
+                torus.position.y=3.5;
+                torus.position.z=0;
+                torus.rotation.x=Math.PI*0.5;
+              }
+
+
+
+              function crearCamara(){
+              	// new THREE.PerspectiveCamera( fov, aspect, near, far );
+				// siendo fov  = campo de vision  
+				// aspect = el segundo la relacion con el aspecto, por lo general el aspecto del tama;o de la pantalla
+                // el tercero y cuarto viene de lo lejos o cerca que este la camara de nuestro rende
+				camera = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.5, 1000 );
+				camera.position.z = 10;
+				camera.position.y = 4;
+				camera.position.x = 0;
+				control= new THREE.OrbitControls(camera);
+              }
+		        
+		        
+                 // var ejes = new THREE.AxisHelper(20); 
+                 // scene.add(ejes);
+ 			
+                //PROCESO DE RENDERIZADO
+				// camera.position.x = 5;
+				function render() {
+					requestAnimationFrame( render );
+                    control.update();
+					renderer.render( scene, camera );
+				}
+				
+			});  
+		</script>
+
+</body>
+</html>
